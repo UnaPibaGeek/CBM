@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>gps_icon.png</file>
+    </qresource>
+</RCC>

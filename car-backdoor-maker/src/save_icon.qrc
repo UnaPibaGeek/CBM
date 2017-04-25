@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>save_icon.png</file>
+    </qresource>
+</RCC>

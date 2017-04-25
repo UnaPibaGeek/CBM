@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>write_icon.png</file>
+    </qresource>
+</RCC>

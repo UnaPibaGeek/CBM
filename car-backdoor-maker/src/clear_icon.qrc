@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>clear_icon.ico</file>
+    </qresource>
+</RCC>
