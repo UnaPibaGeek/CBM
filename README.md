@@ -33,9 +33,9 @@ Under "hardware-schematics" and "firmware" folders you'll find all you need to b
 ## IMPORTANT DATES
 
 <ul>
-<li> Hardware schematics release date: May 20th (2017).</li>
-<li> Firware release date: July 10th (2017). </li>
-<li> Car backdoor maker release date: July 10th (2017).</li>
+<li> Hardware schematics release date: June 20 (2017).</li>
+<li> Firware release date: July 15 (2017). </li>
+<li> Car backdoor maker release date: July 15 (2017).</li>
 </ul>
 
 
