@@ -30,12 +30,6 @@ Furthermore, as an advanced feature, the attack payload can be configured to be 
 
 Under "hardware-schematics" and "firmware" folders you'll find all you need to build our hardware-backdoor in your own lab.
 
-
-## Video Demo
-
-[![the bicho](https://img.youtube.com/vi/FTkUuxuHRrA/0.jpg)](https://www.youtube.com/watch?v=FTkUuxuHRrA)
-
-
 ## IMPORTANT DATES
 
 <ul>
