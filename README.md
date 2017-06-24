@@ -30,18 +30,12 @@ Furthermore, as an advanced feature, the attack payload can be configured to be 
 
 Under "hardware-schematics" and "firmware" folders you'll find all you need to build our hardware-backdoor in your own lab.
 
-
-## Video Demo
-
-[![the bicho](https://img.youtube.com/vi/FTkUuxuHRrA/0.jpg)](https://www.youtube.com/watch?v=FTkUuxuHRrA)
-
-
 ## IMPORTANT DATES
 
 <ul>
-<li> Hardware schematics release date: May 20th (2017).</li>
-<li> Firware release date: July 10th (2017). </li>
-<li> Car backdoor maker release date: July 10th (2017).</li>
+<li> Hardware schematics release date: June 20 (2017).</li>
+<li> Firware release date: July 15 (2017). </li>
+<li> Car backdoor maker release date: July 15 (2017).</li>
 </ul>
 
 
