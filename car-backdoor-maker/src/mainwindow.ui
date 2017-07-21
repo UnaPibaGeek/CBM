@@ -1210,9 +1210,9 @@ border-width:1px;</string>
     <widget class="QPushButton" name="btn_connect">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>40</y>
-       <width>95</width>
+       <width>115</width>
        <height>33</height>
       </rect>
      </property>
@@ -1232,7 +1232,7 @@ border-width:1px;</string>
       <rect>
        <x>135</x>
        <y>40</y>
-       <width>95</width>
+       <width>104</width>
        <height>33</height>
       </rect>
      </property>

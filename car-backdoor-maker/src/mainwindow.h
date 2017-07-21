@@ -13,6 +13,7 @@
 #include <QJsonDocument>
 #include "qcgaugewidget.h"
 #include "input_filter.h"
+#include "connection.h"
 #include <QDebug>
 
 namespace Ui {
@@ -27,6 +28,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     input_filter *mInputFilter;
+    connection *mConn;
 
 
 

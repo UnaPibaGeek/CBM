@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QThread>
 
 bool connected = false;
 
@@ -8,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    mConn = new connection();
 
     /* ## GUI SETUP ## */
     set_frames_table();
@@ -489,14 +491,48 @@ void MainWindow::on_gps_long_editingFinished()
 void MainWindow::on_btn_connect_clicked()
 {
      /* ## CONNECT TO HARDWARE BACKDOOR ## */
+    QPixmap pixmap_btn_icon_connect(":/connect-icon-v2.png");
+    QIcon ConnectIcon(pixmap_btn_icon_connect);
 
-    if(connected){
-        /* # Disconnect # */
+    QPixmap pixmap_btn_icon_disconnect(":/disconnect_icon.png");
+    QIcon DisconnectIcon(pixmap_btn_icon_disconnect);
+
+    switch(connected){
+        case true:
+            /* # Disconnect # */
+            mConn->close_connection();
+
+            ui->status_label->setText("OFF");
+            ui->btn_connect->setText("Connect");
+            ui->btn_connect->setIcon(ConnectIcon);
+
+            connected = false;
+        break;
+        case false:
+            /* # Connect # */
+            bool try_conn = mConn->open_connection();
+            if(try_conn){
+                connected = true;
+
+                ui->status_label->setText("CONNECTED");
+                ui->btn_connect->setText("Disconnect");
+                ui->btn_connect->setIcon(DisconnectIcon);
+
+                change_speedgauge(10,0);
+
+                /* START BYTE */
+                char start = 255;
+                char start_pos = 86;
+                mConn->send_data(start);
+                mConn->send_data(start_pos);
+
+
+            }else{
+                ui->status_label->setText("ERROR");
+            }
+        break;
     }
 
-    if(!connected){
-        /* # Connect # */
-    }
 }
 
 void MainWindow::on_btn_write_backdoor_memory_clicked()
@@ -665,7 +701,6 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
         if(ui->md7->isChecked()){ dt_position_to_do_match << "7";}
         if(ui->md8->isChecked()){ dt_position_to_do_match << "8";}
 
-        qDebug() << dt_position_to_do_match;
     }
 
     /* GPS - Advanced feature */
@@ -704,7 +739,585 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
         ui->status_label->setText("ERROR");
     }else{
 
-        /* # CONNECT TO THE BACKDOOR AND WRITE ITS MEMORY */
+        /* # WRITE BACKDOOR MEMORY */
+        bool conversion_ok = false;
+
+        /* Frame #1 */
+
+        int id1_length = frames[0][0].length();
+        const unsigned int id1 = frames[0][0].toUInt(&conversion_ok, 16);
+        int id1_low = id1 & 0xFF;
+
+        unsigned int id1_h_hex = 00;
+        if(id1_length >= 3){
+            QString id1_h = frames[0][0].at(0);
+            id1_h_hex = id1_h.toUInt(&conversion_ok, 16);
+        }
+        qDebug() << id1_h_hex;
+        qDebug() << id1_low;
+
+
+        char id1l = id1_low;
+        char id1h_pos = 11;
+        char id1l_pos = 12;
+
+        mConn->send_data(id1_h_hex);
+        mConn->send_data(id1h_pos);
+        QThread::msleep(15);
+        mConn->send_data(id1l);
+        mConn->send_data(id1l_pos);
+
+        const unsigned int dlc1c_hex = frames[0][1].toUInt(&conversion_ok, 16);
+        char dlc1c_pos = 13;
+        QThread::msleep(15);
+        mConn->send_data(dlc1c_hex);
+        mConn->send_data(dlc1c_pos);
+
+        const unsigned int dat11_hex = frames[0][2].toUInt(&conversion_ok, 16);
+        char dat11 = dat11_hex;
+        char dat11_pos = 14;
+        QThread::msleep(15);
+        mConn->send_data(dat11);
+        mConn->send_data(dat11_pos);
+
+        const unsigned int dat12_hex = frames[0][3].toUInt(&conversion_ok, 16);
+        char dat12 = dat12_hex;
+        char dat12_pos = 15;
+        QThread::msleep(15);
+        mConn->send_data(dat12);
+        mConn->send_data(dat12_pos);
+
+        const unsigned int dat13_hex = frames[0][4].toUInt(&conversion_ok, 16);
+        char dat13 = dat13_hex;
+        char dat13_pos = 16;
+        QThread::msleep(15);
+        mConn->send_data(dat13);
+        mConn->send_data(dat13_pos);
+
+        const unsigned int dat14_hex = frames[0][5].toUInt(&conversion_ok, 16);
+        char dat14 = dat14_hex;
+        char dat14_pos = 17;
+        QThread::msleep(15);
+        mConn->send_data(dat14);
+        mConn->send_data(dat14_pos);
+
+        const unsigned int dat15_hex = frames[0][6].toUInt(&conversion_ok, 16);
+        char dat15 = dat15_hex;
+        char dat15_pos = 18;
+        QThread::msleep(15);
+        mConn->send_data(dat15);
+        mConn->send_data(dat15_pos);
+
+        const unsigned int dat16_hex = frames[0][7].toUInt(&conversion_ok, 16);
+        char dat16 = dat16_hex;
+        char dat16_pos = 19;
+        QThread::msleep(15);
+        mConn->send_data(dat16);
+        mConn->send_data(dat16_pos);
+
+        const unsigned int dat17_hex = frames[0][8].toUInt(&conversion_ok, 16);
+        char dat17 = dat17_hex;
+        char dat17_pos = 20;
+        QThread::msleep(15);
+        mConn->send_data(dat17);
+        mConn->send_data(dat17_pos);
+
+        const unsigned int dat18_hex = frames[0][9].toUInt(&conversion_ok, 16);
+        char dat18 = dat18_hex;
+        char dat18_pos = 21;
+        QThread::msleep(15);
+        mConn->send_data(dat18);
+        mConn->send_data(dat18_pos);
+
+        char sms11 = frames[0][10].at(0).toLatin1();
+        char sms11_pos = 22;
+        QThread::msleep(15);
+        mConn->send_data(sms11);
+        QThread::msleep(15);
+        mConn->send_data(sms11_pos);
+
+        char sms12 = frames[0][10].at(1).toLatin1();
+        char sms12_pos = 23;
+        QThread::msleep(15);
+        mConn->send_data(sms12);
+        QThread::msleep(15);
+        mConn->send_data(sms12_pos);
+
+        char sms13 = frames[0][10].at(2).toLatin1();
+        char sms13_pos = 24;
+        QThread::msleep(15);
+        mConn->send_data(sms13);
+        QThread::msleep(15);
+        mConn->send_data(sms13_pos);
+
+        char sms14 = frames[0][10].at(3).toLatin1();
+        char sms14_pos = 25;
+        QThread::msleep(15);
+        mConn->send_data(sms14);
+        QThread::msleep(15);
+        mConn->send_data(sms14_pos);
+
+        /* Frame #2 */
+        int id2_length = frames[1][0].length();
+        const unsigned int id2 = frames[1][0].toUInt(&conversion_ok, 16);
+        int id2_low = id2 & 0xFF;
+
+        unsigned int id2_h_hex = 00;
+        if(id2_length >= 3){
+            QString id2_h = frames[1][0].at(0);
+            id2_h_hex = id2_h.toUInt(&conversion_ok, 16);
+        }
+        qDebug() << id2_h_hex;
+        qDebug() << id2_low;
+
+        char id2l = id2_low;
+        char id2h_pos = 26;
+        char id2l_pos = 27;
+
+        QThread::msleep(15);
+        mConn->send_data(id2_h_hex);
+        mConn->send_data(id2h_pos);
+        QThread::msleep(15);
+        mConn->send_data(id2l);
+        mConn->send_data(id2l_pos);
+
+        const unsigned int dlc2c_hex = frames[1][1].toUInt(&conversion_ok, 16);
+        char dlc2c_pos = 28;
+        QThread::msleep(15);
+        mConn->send_data(dlc2c_hex);
+        mConn->send_data(dlc2c_pos);
+
+        const unsigned int dat21_hex = frames[1][2].toUInt(&conversion_ok, 16);
+        char dat21 = dat21_hex;
+        char dat21_pos = 29;
+        QThread::msleep(15);
+        mConn->send_data(dat21);
+        mConn->send_data(dat21_pos);
+
+        const unsigned int dat22_hex = frames[1][3].toUInt(&conversion_ok, 16);
+        char dat22 = dat22_hex;
+        char dat22_pos = 30;
+        QThread::msleep(15);
+        mConn->send_data(dat22);
+        mConn->send_data(dat22_pos);
+
+        const unsigned int dat23_hex = frames[1][4].toUInt(&conversion_ok, 16);
+        char dat23 = dat23_hex;
+        char dat23_pos = 31;
+        QThread::msleep(15);
+        mConn->send_data(dat23);
+        mConn->send_data(dat23_pos);
+
+        const unsigned int dat24_hex = frames[1][5].toUInt(&conversion_ok, 16);
+        char dat24 = dat24_hex;
+        char dat24_pos = 32;
+        QThread::msleep(15);
+        mConn->send_data(dat24);
+        mConn->send_data(dat24_pos);
+
+        const unsigned int dat25_hex = frames[1][6].toUInt(&conversion_ok, 16);
+        char dat25 = dat25_hex;
+        char dat25_pos = 33;
+        QThread::msleep(15);
+        mConn->send_data(dat25);
+        mConn->send_data(dat25_pos);
+
+        const unsigned int dat26_hex = frames[1][7].toUInt(&conversion_ok, 16);
+        char dat26 = dat26_hex;
+        char dat26_pos = 34;
+        QThread::msleep(15);
+        mConn->send_data(dat26);
+        mConn->send_data(dat26_pos);
+
+        const unsigned int dat27_hex = frames[1][8].toUInt(&conversion_ok, 16);
+        char dat27 = dat27_hex;
+        char dat27_pos = 35;
+        QThread::msleep(15);
+        mConn->send_data(dat27);
+        mConn->send_data(dat27_pos);
+
+        const unsigned int dat28_hex = frames[1][9].toUInt(&conversion_ok, 16);
+        char dat28 = dat28_hex;
+        char dat28_pos = 36;
+        QThread::msleep(15);
+        mConn->send_data(dat28);
+        mConn->send_data(dat28_pos);
+
+        char sms21 = frames[1][10].at(0).toLatin1();
+        char sms21_pos = 37;
+        QThread::msleep(15);
+        mConn->send_data(sms21);
+        QThread::msleep(15);
+        mConn->send_data(sms21_pos);
+
+        char sms22 = frames[1][10].at(1).toLatin1();
+        char sms22_pos = 38;
+        QThread::msleep(15);
+        mConn->send_data(sms22);
+        QThread::msleep(15);
+        mConn->send_data(sms22_pos);
+
+        char sms23 = frames[1][10].at(2).toLatin1();
+        char sms23_pos = 39;
+        QThread::msleep(15);
+        mConn->send_data(sms23);
+        QThread::msleep(15);
+        mConn->send_data(sms23_pos);
+
+        char sms24 = frames[1][10].at(3).toLatin1();
+        char sms24_pos = 40;
+        QThread::msleep(15);
+        mConn->send_data(sms24);
+        QThread::msleep(15);
+        mConn->send_data(sms24_pos);
+
+        /* Frame #3 */
+        int id3_length = frames[2][0].length();
+        const unsigned int id3 = frames[2][0].toUInt(&conversion_ok, 16);
+        int id3_low = id3 & 0xFF;
+
+        unsigned int id3_h_hex = 00;
+        if(id3_length >= 3){
+            QString id3_h = frames[2][0].at(0);
+            id3_h_hex = id3_h.toUInt(&conversion_ok, 16);
+        }
+        qDebug() << id3_h_hex;
+        qDebug() << id3_low;
+
+        char id3h = id3_h_hex;
+        char id3l = id3_low;
+        char id3h_pos = 41;
+        char id3l_pos = 42;
+
+        QThread::msleep(15);
+        mConn->send_data(id3h);
+        mConn->send_data(id3h_pos);
+        QThread::msleep(15);
+        mConn->send_data(id3l);
+        mConn->send_data(id3l_pos);
+
+        const unsigned int dlc3c_hex = frames[2][1].toUInt(&conversion_ok, 16);
+        char dlc3c_pos = 43;
+        QThread::msleep(15);
+        mConn->send_data(dlc3c_hex);
+        mConn->send_data(dlc3c_pos);
+
+        const unsigned int dat31_hex = frames[2][2].toUInt(&conversion_ok, 16);
+        char dat31 = dat31_hex;
+        char dat31_pos = 44;
+        QThread::msleep(15);
+        mConn->send_data(dat31);
+        mConn->send_data(dat31_pos);
+
+        const unsigned int dat32_hex = frames[2][3].toUInt(&conversion_ok, 16);
+        char dat32 = dat32_hex;
+        char dat32_pos = 45;
+        QThread::msleep(15);
+        mConn->send_data(dat32);
+        mConn->send_data(dat32_pos);
+
+        const unsigned int dat33_hex = frames[2][4].toUInt(&conversion_ok, 16);
+        char dat33 = dat33_hex;
+        char dat33_pos = 46;
+        QThread::msleep(15);
+        mConn->send_data(dat33);
+        mConn->send_data(dat33_pos);
+
+        const unsigned int dat34_hex = frames[2][5].toUInt(&conversion_ok, 16);
+        char dat34 = dat34_hex;
+        char dat34_pos = 47;
+        QThread::msleep(15);
+        mConn->send_data(dat34);
+        mConn->send_data(dat34_pos);
+
+        const unsigned int dat35_hex = frames[2][6].toUInt(&conversion_ok, 16);
+        char dat35 = dat35_hex;
+        char dat35_pos = 48;
+        QThread::msleep(15);
+        mConn->send_data(dat35);
+        mConn->send_data(dat35_pos);
+
+        const unsigned int dat36_hex = frames[2][7].toUInt(&conversion_ok, 16);
+        char dat36 = dat36_hex;
+        char dat36_pos = 49;
+        QThread::msleep(15);
+        mConn->send_data(dat36);
+        mConn->send_data(dat36_pos);
+
+        const unsigned int dat37_hex = frames[2][8].toUInt(&conversion_ok, 16);
+        char dat37 = dat37_hex;
+        char dat37_pos = 50;
+        QThread::msleep(15);
+        mConn->send_data(dat37);
+        mConn->send_data(dat37_pos);
+
+        const unsigned int dat38_hex = frames[2][9].toUInt(&conversion_ok, 16);
+        char dat38 = dat38_hex;
+        char dat38_pos = 51;
+        QThread::msleep(15);
+        mConn->send_data(dat38);
+        mConn->send_data(dat38_pos);
+
+        char sms31 = frames[2][10].at(0).toLatin1();
+        char sms31_pos = 52;
+        QThread::msleep(15);
+        mConn->send_data(sms31);
+        QThread::msleep(15);
+        mConn->send_data(sms31_pos);
+
+        char sms32 = frames[2][10].at(1).toLatin1();
+        char sms32_pos = 53;
+        QThread::msleep(15);
+        mConn->send_data(sms32);
+        QThread::msleep(15);
+        mConn->send_data(sms32_pos);
+
+        char sms33 = frames[2][10].at(2).toLatin1();
+        char sms33_pos = 54;
+        QThread::msleep(15);
+        mConn->send_data(sms33);
+        QThread::msleep(15);
+        mConn->send_data(sms33_pos);
+
+        char sms34 = frames[2][10].at(3).toLatin1();
+        char sms34_pos = 55;
+        QThread::msleep(15);
+        mConn->send_data(sms34);
+        QThread::msleep(15);
+        mConn->send_data(sms34_pos);
+
+
+        /* Frame #4 */
+        int id4_length = frames[3][0].length();
+        const unsigned int id4 = frames[3][0].toUInt(&conversion_ok, 16);
+        int id4_low = id4 & 0xFF;
+
+        unsigned int id4_h_hex = 00;
+        if(id4_length >= 3){
+            QString id4_h = frames[3][0].at(0);
+            id4_h_hex = id4_h.toUInt(&conversion_ok, 16);
+        }
+        qDebug() << id4_h_hex;
+        qDebug() << id4_low;
+
+        char id4h = id4_h_hex;
+        char id4l = id4_low;
+        char id4h_pos = 56;
+        char id4l_pos = 57;
+
+        QThread::msleep(15);
+        mConn->send_data(id4h);
+        mConn->send_data(id4h_pos);
+        QThread::msleep(15);
+        mConn->send_data(id4l);
+        mConn->send_data(id4l_pos);
+
+        const unsigned int dlc4c_hex = frames[3][1].toUInt(&conversion_ok, 16);
+        char dlc4c_pos = 58;
+        QThread::msleep(15);
+        mConn->send_data(dlc4c_hex);
+        mConn->send_data(dlc4c_pos);
+
+        const unsigned int dat41_hex = frames[3][2].toUInt(&conversion_ok, 16);
+        char dat41 = dat41_hex;
+        char dat41_pos = 59;
+        QThread::msleep(15);
+        mConn->send_data(dat41);
+        mConn->send_data(dat41_pos);
+
+        const unsigned int dat42_hex = frames[3][3].toUInt(&conversion_ok, 16);
+        char dat42 = dat42_hex;
+        char dat42_pos = 60;
+        QThread::msleep(15);
+        mConn->send_data(dat42);
+        mConn->send_data(dat42_pos);
+
+        const unsigned int dat43_hex = frames[3][4].toUInt(&conversion_ok, 16);
+        char dat43 = dat43_hex;
+        char dat43_pos = 61;
+        QThread::msleep(15);
+        mConn->send_data(dat43);
+        mConn->send_data(dat43_pos);
+
+        const unsigned int dat44_hex = frames[3][5].toUInt(&conversion_ok, 16);
+        char dat44 = dat44_hex;
+        char dat44_pos = 62;
+        QThread::msleep(15);
+        mConn->send_data(dat44);
+        mConn->send_data(dat44_pos);
+
+        const unsigned int dat45_hex = frames[3][6].toUInt(&conversion_ok, 16);
+        char dat45 = dat45_hex;
+        char dat45_pos = 63;
+        QThread::msleep(15);
+        mConn->send_data(dat45);
+        mConn->send_data(dat45_pos);
+
+        const unsigned int dat46_hex = frames[3][7].toUInt(&conversion_ok, 16);
+        char dat46 = dat46_hex;
+        char dat46_pos = 64;
+        QThread::msleep(15);
+        mConn->send_data(dat46);
+        mConn->send_data(dat46_pos);
+
+        const unsigned int dat47_hex = frames[3][8].toUInt(&conversion_ok, 16);
+        char dat47 = dat47_hex;
+        char dat47_pos = 65;
+        QThread::msleep(15);
+        mConn->send_data(dat47);
+        mConn->send_data(dat47_pos);
+
+        const unsigned int dat48_hex = frames[3][9].toUInt(&conversion_ok, 16);
+        char dat48 = dat48_hex;
+        char dat48_pos = 66;
+        QThread::msleep(15);
+        mConn->send_data(dat48);
+        mConn->send_data(dat48_pos);
+
+        char sms41 = frames[3][10].at(0).toLatin1();
+        char sms41_pos = 67;
+        QThread::msleep(15);
+        mConn->send_data(sms41);
+        mConn->send_data(sms41_pos);
+
+        char sms42 = frames[3][10].at(1).toLatin1();
+        char sms42_pos = 68;
+        QThread::msleep(15);
+        mConn->send_data(sms42);
+        mConn->send_data(sms42_pos);
+
+        char sms43 = frames[3][10].at(2).toLatin1();
+        char sms43_pos = 69;
+        QThread::msleep(15);
+        mConn->send_data(sms43);
+        mConn->send_data(sms43_pos);
+
+        char sms44 = frames[3][10].at(3).toLatin1();
+        char sms44_pos = 70;
+        QThread::msleep(15);
+        mConn->send_data(sms44);
+        mConn->send_data(sms44_pos);
+
+        /* Frame #5 */
+        int id5_length = frames[4][0].length();
+        const unsigned int id5 = frames[4][0].toUInt(&conversion_ok, 16);
+        int id5_low = id5 & 0xFF;
+
+        unsigned int id5_h_hex = 00;
+        if(id5_length >= 3){
+            QString id5_h = frames[4][0].at(0);
+            id5_h_hex = id5_h.toUInt(&conversion_ok, 16);
+        }
+        qDebug() << id5_h_hex;
+        qDebug() << id5_low;
+
+        char id5h = id5_h_hex;
+        char id5l = id5_low;
+        char id5h_pos = 71;
+        char id5l_pos = 72;
+
+        QThread::msleep(15);
+        mConn->send_data(id5h);
+        mConn->send_data(id5h_pos);
+        QThread::msleep(15);
+        mConn->send_data(id5l);
+        mConn->send_data(id5l_pos);
+
+        const unsigned int dlc5c_hex = frames[4][1].toUInt(&conversion_ok, 16);
+        char dlc5c_pos = 73;
+        QThread::msleep(15);
+        mConn->send_data(dlc5c_hex);
+        mConn->send_data(dlc5c_pos);
+
+        const unsigned int dat51_hex = frames[4][2].toUInt(&conversion_ok, 16);
+        char dat51 = dat51_hex;
+        char dat51_pos = 74;
+        QThread::msleep(15);
+        mConn->send_data(dat51);
+        mConn->send_data(dat51_pos);
+
+        const unsigned int dat52_hex = frames[4][3].toUInt(&conversion_ok, 16);
+        char dat52 = dat52_hex;
+        char dat52_pos = 75;
+        QThread::msleep(15);
+        mConn->send_data(dat52);
+        mConn->send_data(dat52_pos);
+
+        const unsigned int dat53_hex = frames[4][4].toUInt(&conversion_ok, 16);
+        char dat53 = dat53_hex;
+        char dat53_pos = 76;
+        QThread::msleep(15);
+        mConn->send_data(dat53);
+        mConn->send_data(dat53_pos);
+
+        const unsigned int dat54_hex = frames[4][5].toUInt(&conversion_ok, 16);
+        char dat54 = dat54_hex;
+        char dat54_pos = 77;
+        QThread::msleep(15);
+        mConn->send_data(dat54);
+        mConn->send_data(dat54_pos);
+
+        const unsigned int dat55_hex = frames[4][6].toUInt(&conversion_ok, 16);
+        char dat55 = dat55_hex;
+        char dat55_pos = 78;
+        QThread::msleep(15);
+        mConn->send_data(dat55);
+        mConn->send_data(dat55_pos);
+
+        const unsigned int dat56_hex = frames[4][7].toUInt(&conversion_ok, 16);
+        char dat56 = dat56_hex;
+        char dat56_pos = 79;
+        QThread::msleep(15);
+        mConn->send_data(dat56);
+        mConn->send_data(dat56_pos);
+
+        const unsigned int dat57_hex = frames[4][8].toUInt(&conversion_ok, 16);
+        char dat57 = dat57_hex;
+        char dat57_pos = 80;
+        QThread::msleep(15);
+        mConn->send_data(dat57);
+        mConn->send_data(dat57_pos);
+
+        const unsigned int dat58_hex = frames[4][9].toUInt(&conversion_ok, 16);
+        char dat58 = dat58_hex;
+        char dat58_pos = 81;
+        QThread::msleep(15);
+        mConn->send_data(dat58);
+        mConn->send_data(dat58_pos);
+
+        char sms51 = frames[4][10].at(0).toLatin1();
+        char sms51_pos = 82;
+        QThread::msleep(15);
+        mConn->send_data(sms51);
+        mConn->send_data(sms51_pos);
+
+        char sms52 = frames[4][10].at(1).toLatin1();
+        char sms52_pos = 83;
+        QThread::msleep(15);
+        mConn->send_data(sms52);
+        mConn->send_data(sms52_pos);
+
+        char sms53 = frames[4][10].at(2).toLatin1();
+        char sms53_pos = 84;
+        QThread::msleep(15);
+        mConn->send_data(sms53);
+        mConn->send_data(sms53_pos);
+
+        char sms54 = frames[4][10].at(3).toLatin1();
+        char sms54_pos = 85;
+        QThread::msleep(15);
+        mConn->send_data(sms54);
+        mConn->send_data(sms54_pos);
+
+        /* READY */
+        char ready = 255;
+        char ready_pos = 87;
+        QThread::msleep(15);
+        mConn->send_data(ready);
+        mConn->send_data(ready_pos);
+
+        ui->status_label->setText("READY");
+        ui->progressBar->setValue(100);
     }
 
 }

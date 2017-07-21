@@ -16,13 +16,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     qcgaugewidget.cpp \
-    input_filter.cpp
+    input_filter.cpp \
+    connection.cpp
 
 HEADERS  += mainwindow.h \
     qcgaugewidget.h \
-    input_filter.h
+    input_filter.h \
+    connection.h
 
 FORMS    += mainwindow.ui
+
+include(qextserialport/src/qextserialport.pri)
 
 RESOURCES += \
     connect_icon.qrc \
