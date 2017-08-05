@@ -40,7 +40,7 @@ int input_filter::frames_validator(QVector<QStringList> frames, int pfq){
             if(conversion_ok){
                 conversion_ok = false; // It's ok!.
             }else{
-                return 01; // Something wrong!.
+                return 21; // Something wrong!.
             }
 
 
@@ -48,7 +48,7 @@ int input_filter::frames_validator(QVector<QStringList> frames, int pfq){
             int dlc_i;
             dlc_i = dlc.toInt();
             if (dlc_i >= 9){
-                return 02; // Something wrong!.
+                return 22; // Something wrong!.
             }
 
 
@@ -141,8 +141,6 @@ int input_filter::frames_validator(QVector<QStringList> frames, int pfq){
                 return 41; //Something wrong!
             }
 
-        }else{
-            return 0;
         }
 
     }

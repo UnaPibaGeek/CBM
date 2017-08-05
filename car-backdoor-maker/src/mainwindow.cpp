@@ -402,7 +402,8 @@ void MainWindow::on_actionWrite_Backdoor_Memory_triggered()
 
 void MainWindow::on_actionLook_for_Frames_triggered()
 {
-
+    QString opencandb_link = "http://www.opencandb.online";
+    QDesktopServices::openUrl(QUrl(opencandb_link));
 }
 
 void MainWindow::on_actionClear_Frames_Table_triggered()
@@ -505,6 +506,7 @@ void MainWindow::on_btn_connect_clicked()
             ui->status_label->setText("OFF");
             ui->btn_connect->setText("Connect");
             ui->btn_connect->setIcon(ConnectIcon);
+            ui->progressBar->setValue(0);
 
             connected = false;
         break;
@@ -565,18 +567,16 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
     /* # Input filter # */
     mInputFilter = new input_filter();
 
-    bool all_ok = true;
-    /* WE ARE STILL WORKING ON INPUT VALIDATOR */
-    /* Frames table
+    /* Frames table */
     int frames_validator = mInputFilter->frames_validator(frames,predefined_frames_quantity);
     bool all_ok = true;
 
     switch(frames_validator){
-        case 01:
+        case 21:
             QMessageBox::critical(this,"Error!","Wrong ID in frames table!.");
             all_ok = false;
         break;
-        case 02:
+        case 22:
             QMessageBox::critical(this,"Error!","Wrong DLC in frames table!.");
             all_ok = false;
         break;
@@ -756,8 +756,7 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
                 QString id1_h = frames[0][0].at(0);
                 id1_h_hex = id1_h.toUInt(&conversion_ok, 16);
             }
-            qDebug() << id1_h_hex;
-            qDebug() << id1_low;
+
 
 
             char id1l = id1_low;
@@ -862,6 +861,8 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
 
         }
 
+        ui->progressBar->setValue(55);
+
         /* Frame #2 */
         if(predefined_frames_quantity >= 2){
 
@@ -874,8 +875,6 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
                 QString id2_h = frames[1][0].at(0);
                 id2_h_hex = id2_h.toUInt(&conversion_ok, 16);
             }
-            qDebug() << id2_h_hex;
-            qDebug() << id2_low;
 
             char id2l = id2_low;
             char id2h_pos = 26;
@@ -980,6 +979,8 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
 
         }
 
+        ui->progressBar->setValue(60);
+
         /* Frame #3 */
         if(predefined_frames_quantity >= 3){
             int id3_length = frames[2][0].length();
@@ -991,8 +992,6 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
                 QString id3_h = frames[2][0].at(0);
                 id3_h_hex = id3_h.toUInt(&conversion_ok, 16);
             }
-            qDebug() << id3_h_hex;
-            qDebug() << id3_low;
 
             char id3h = id3_h_hex;
             char id3l = id3_low;
@@ -1098,6 +1097,7 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
 
         }
 
+        ui->progressBar->setValue(65);
 
         /* Frame #4 */
         if(predefined_frames_quantity >= 4){
@@ -1111,8 +1111,6 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
                 QString id4_h = frames[3][0].at(0);
                 id4_h_hex = id4_h.toUInt(&conversion_ok, 16);
             }
-            qDebug() << id4_h_hex;
-            qDebug() << id4_low;
 
             char id4h = id4_h_hex;
             char id4l = id4_low;
@@ -1214,6 +1212,8 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
 
         }
 
+        ui->progressBar->setValue(70);
+
         /* Frame #5 */
         if(predefined_frames_quantity >= 5){
 
@@ -1226,8 +1226,6 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
                 QString id5_h = frames[4][0].at(0);
                 id5_h_hex = id5_h.toUInt(&conversion_ok, 16);
             }
-            qDebug() << id5_h_hex;
-            qDebug() << id5_low;
 
             char id5h = id5_h_hex;
             char id5l = id5_low;
@@ -1328,6 +1326,7 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
             mConn->send_data(sms54_pos);
         }
 
+        ui->progressBar->setValue(75);
 
         /* READY */
         char ready = 255;

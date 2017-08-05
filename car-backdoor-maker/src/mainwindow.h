@@ -14,7 +14,8 @@
 #include "qcgaugewidget.h"
 #include "input_filter.h"
 #include "connection.h"
-#include <QDebug>
+#include "QDesktopServices"
+//#include <QDebug>
 
 namespace Ui {
 class MainWindow;
