@@ -25,17 +25,9 @@ Furthermore, as an advanced feature, the attack payload can be configured to be 
 
 
 <p align="center">
-  <img src="http://www.semecayounexploit.com/CMB/the-bicho.jpg" />
+  <img src="http://www.opencandb.online/thebicho-photos/the-bicho.jpg" />
 </p>
 
 Under "hardware-schematics" and "firmware" folders you'll find all you need to build our hardware-backdoor in your own lab.
-
-## IMPORTANT DATES
-
-<ul>
-<li> Hardware schematics release date: June 20 (2017).</li>
-<li> Firware release date: July 15 (2017). </li>
-<li> Car backdoor maker release date: July 15 (2017).</li>
-</ul>
 
 
