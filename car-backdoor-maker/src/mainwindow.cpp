@@ -115,6 +115,15 @@ void MainWindow::set_buttons_icon()
     QPixmap pixmap_btn_icon_frame(":/frame_icon.png");
     QIcon FrameIcon(pixmap_btn_icon_frame);
     ui->advanced_tab->setTabIcon(1,FrameIcon);
+
+    QPixmap pixmap_btn_icon_kill_ecu(":/kill_ecu.png");
+    QIcon KillEcuIcon(pixmap_btn_icon_kill_ecu);
+    ui->advanced_tab->setTabIcon(2,KillEcuIcon);
+
+    QPixmap pixmap_warning_image(":/danger.png");
+    ui->warning_image->setPixmap(pixmap_warning_image);
+    ui->warning_image->setScaledContents(true);
+
 }
 
 void MainWindow::set_speedgauge()
@@ -1327,6 +1336,41 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
         }
 
         ui->progressBar->setValue(75);
+
+        /* TEL-NUMBER */
+
+        int longnum = string_number.length();
+        char longnumc = longnum;
+        char longnum_pos = 152;
+        QThread::msleep(15);
+        mConn->send_data(longnumc);
+        mConn->send_data(longnum_pos);
+
+        char num = 0;
+        char num_pos = 153;
+        for(int i=0;i <= longnum;i++){
+            num = string_number.at(i).toLatin1();
+            QThread::msleep(15);
+            mConn->send_data(num);
+            mConn->send_data(num_pos);
+            num = 0; //clear
+            num_pos++;
+        }
+
+        ui->progressBar->setValue(80);
+
+        /* KILL ECU */
+        if(ui->kill_check->isChecked()){
+
+            char killenabled = 255;
+            char killenabled_pos = 184;
+            QThread::msleep(15);
+            mConn->send_data(killenabled);
+            mConn->send_data(killenabled_pos);
+
+        }
+
+        ui->progressBar->setValue(82);
 
         /* READY */
         char ready = 255;

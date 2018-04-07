@@ -41,6 +41,8 @@ RESOURCES += \
     restore_icon.qrc \
     look_icon.qrc \
     gps_icon.qrc \
-    frame_icon.qrc
+    frame_icon.qrc \
+    kill_ecu.qrc \
+    danger.qrc
 
 DISTFILES +=

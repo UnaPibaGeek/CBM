@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>kill_ecu.png</file>
+    </qresource>
+</RCC>

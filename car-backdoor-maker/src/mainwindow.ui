@@ -114,7 +114,7 @@ text-align:center;
      </font>
     </property>
     <property name="text">
-     <string>Car Backdoor Maker v1.0</string>
+     <string>Car Backdoor Maker v2.0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -258,7 +258,7 @@ QTabBar::tab:!selected {
 }</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="gps_tab">
       <attribute name="title">
@@ -988,6 +988,69 @@ color:yellow;</string>
        </property>
        <property name="text">
         <string>match?:</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="kill_tab">
+      <attribute name="title">
+       <string>Kill ECU</string>
+      </attribute>
+      <widget class="QCheckBox" name="kill_check">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>65</y>
+         <width>211</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Enable Kill ECU command?</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_24">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>391</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;By checking the following checkbox you will enable &amp;quot;KILL&amp;quot; &lt;br&gt;command to trying killing the car's ECU.&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_25">
+       <property name="geometry">
+        <rect>
+         <x>115</x>
+         <y>100</y>
+         <width>301</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; WARNING: Killing the ECU when the car is at &lt;br/&gt; high speed might cause &lt;span style=&quot; color:#ff0000;&quot;&gt;FATAL ACCIDENTS&lt;/span&gt;.&lt;br/&gt;We are not responsible for bad uses.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="warning_image">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>100</y>
+         <width>67</width>
+         <height>63</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>
