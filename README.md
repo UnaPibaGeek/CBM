@@ -1,33 +1,35 @@
-# CBM - The Bicho
-A hardware-backdoor for CAN bus - by @UnaPibaGeek &amp; @holesec
+# Car Backdoor Maker
 
-For the first time, a hardware backdoor tool is presented having several advanced features, such as: remote control via SMS commands, automated launch of attack payloads at a GPS location or when a specific car status is reached; and a configuration interface that allows users to create attack payloads in an easy manner.
-Have you ever imagined the possibility of your car being automatically attacked based on its GPS coordinates, its current speed or any other set of parameters? Now it's possible :-)
+The Car Backdoor Maker is a software for making attack templates and load them into [The Bicho](https://github.com/UnaPibaGeek/thebicho).  
+Before starting, please read how to [Get The Bicho hardware](https://github.com/UnaPibaGeek/thebicho/wiki/Getting-The-Bicho-hardware).
 
-Our project is divided in two parts: the "Car Backdoor Maker" (PC software) and "The Bicho" (hardware-backdoor for CAN bus).
+## Screnshot
 
-## Car Backdoor Maker
+## Install and Usage
+This project has its [wiki](https://github.com/UnaPibaGeek/CBM/wiki) where you will find the following useful documentation: 
 
-The "car backdoor maker" is a PC software that allows payload customization for using with the hardware-backdoor. 
-It has an intuitive graphical interface:
+* [**Installation**](https://github.com/UnaPibaGeek/CBM/wiki/Installation)  
+  * [Compiling from source code](https://github.com/UnaPibaGeek/CBM/wiki/Compiling-from-source-code)  
+  * [Running on Linux](https://github.com/UnaPibaGeek/CBM/wiki/Running-on-Linux)  
+  * [Running on Windows](https://github.com/UnaPibaGeek/CBM/wiki/Running-on-Windows)  
+* [**Connect to The Bicho**](https://github.com/UnaPibaGeek/CBM/wiki/Connect-to-The-Bicho)  
+* [**Basic Setup**](https://github.com/UnaPibaGeek/CBM/wiki/Basic-Setup)  
+  * [Setup the CAN frames](https://github.com/UnaPibaGeek/CBM/wiki/Setup-the-CAN-frames)  
+  * [Save an attack template](https://github.com/UnaPibaGeek/CBM/wiki/Save-an-attack-template)  
+  * [Restore an attack template](https://github.com/UnaPibaGeek/CBM/wiki/Restore-an-attack-template)  
+* [**Advanced Setup**](https://github.com/UnaPibaGeek/CBM/wiki/Advanced-Setup)  
+  * [Tel-Number filter](https://github.com/UnaPibaGeek/CBM/wiki/Tel-Number-filter)  
+  * [Stop command](https://github.com/UnaPibaGeek/CBM/wiki/Stop-command)  
+* [**Advanced Features**](https://github.com/UnaPibaGeek/CBM/wiki/Advanced-Features)  
+  * [Kill ECU](https://github.com/UnaPibaGeek/CBM/wiki/Kill-ECU)  
+  * [Frame](https://github.com/UnaPibaGeek/CBM/wiki/Frame)  
+  * [GPS](https://github.com/UnaPibaGeek/CBM/wiki/GPS)  
+* [**Write The Bicho memory**](https://github.com/UnaPibaGeek/CBM/wiki/Write-The-Bicho-memory)  
+* [**Check for updates**](https://github.com/UnaPibaGeek/CBM/wiki/Check-for-updates)  
 
-<p align="center">
-  <img src="http://www.semecayounexploit.com/CMB/car-backdoor-maker-1.png" />
-</p>
+## Disclaimer
+*We are not responsible for bad uses.*
 
-Under "car backdoor maker" folder, you'll find the source code to compile it using Qt C++ 5.6.
-
-## The Bicho
-
-The Bicho is a hardware-backdoor that must be connected to the car's OBD-II port.
-It supports multiple attack payloads (pre-configured using Car Backdoor Maker) and it can be used against any vehicle that supports CAN, without limitations regarding manufacturer or model. Each one of the payloads is associated to a command that can be delivered via SMS, allowing remote execution from any geographical point.
-Furthermore, as an advanced feature, the attack payload can be configured to be automatically executed once the victim's vehicle is proximate to a given GPS location. The execution can also be triggered by detecting the transmission of a particular CAN frame, which can be associated with the speed of the vehicle, its fuel level, and some other factors, providing the means to design highly sophisticated attacks and execute them remotely.
-
-
-<p align="center">
-  <img src="http://www.opencandb.online/thebicho-photos/the-bicho.jpg" />
-</p>
-
-Under "hardware-schematics" and "firmware" folders you'll find all you need to build our hardware-backdoor in your own lab.
-
-
+## Authors
+* *Sheila A. Berta - [(@UnaPibaGeek)](https://www.twitter.com/UnaPibaGeek).*  
+* *Claudio Caracciolo - [(@holesec)](https://www.twitter.com/holesec).*
