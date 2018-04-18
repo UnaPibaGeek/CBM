@@ -114,7 +114,7 @@ text-align:center;
      </font>
     </property>
     <property name="text">
-     <string>Car Backdoor Maker v2.0</string>
+     <string>Car Backdoor Maker v2.1</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">

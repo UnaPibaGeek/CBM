@@ -638,7 +638,7 @@ void MainWindow::on_btn_write_backdoor_memory_clicked()
     }else{
         bool number_validator_r = mInputFilter->tel_number_validator(string_number);
         if(!number_validator_r){
-            QMessageBox::critical(this,"Error!","Attacker tel-number must be only numeric characters!");
+            QMessageBox::critical(this,"Error!","Attacker tel-number too long or not contains only numeric characters!");
             all_ok = false;
         }
     }

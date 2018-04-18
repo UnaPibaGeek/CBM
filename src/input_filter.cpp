@@ -154,6 +154,10 @@ bool input_filter::tel_number_validator(QString string_number){
         return false; //Something wrong!
     }
 
+    if(string_number.length() >= 16){
+        return false;
+    }
+
     return true;
 }
 
