@@ -5,6 +5,10 @@ Before starting, please read how to [Get The Bicho hardware](https://github.com/
 
 ## Screnshot
 
+<p align="center">
+  <img src="http://www.semecayounexploit.com/CBM-THEBICHO/cbm-screenshot.png" />
+</p>
+
 ## Install and Usage
 This project has its [wiki](https://github.com/UnaPibaGeek/CBM/wiki) where you will find the following useful documentation: 
 
