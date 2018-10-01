@@ -6,7 +6,7 @@ Before starting, please read how to [Get The Bicho hardware](https://github.com/
 ## Screnshot
 
 <p align="center">
-  <img src="http://www.semecayounexploit.com/CBM-THEBICHO/cbm-screenshot.png" />
+  <img src="https://www.semecayounexploit.com/CBM-THEBICHO/cbm-screenshot.png" />
 </p>
 
 ## Install and Usage
